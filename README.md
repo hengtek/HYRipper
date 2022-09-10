@@ -1,4 +1,4 @@
-# AssetRipper
+# HoYoRipper
 
 [![AssetRipper Logo](Media/Images/2D_Logo/AssetRipperLogoBackground.png)](https://github.com/AssetRipper/AssetRipper/raw/master/Media/Images/2D_Logo/AssetRipperLogoBackground.png)
 
