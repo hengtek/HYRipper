@@ -357,8 +357,11 @@ namespace AssetRipper.Core.Parser.Files.SerializedFiles
 			}
 			catch (Exception ex)
 			{
-				replaceWithUnreadableObject = true;
-				Logger.Error($"Error during reading of asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}", ex);
+				if (assetInfo.ClassID != ClassIDType.ParticleSystem && assetInfo.ClassID != ClassIDType.ParticleSystemRenderer)
+				{
+					replaceWithUnreadableObject = true;
+					Logger.Error($"Error during reading of asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}", ex);
+				}
 			}
 			long read = reader.BaseStream.Position - offset;
 			if (!replaceWithUnreadableObject && read != size)
@@ -369,8 +372,11 @@ namespace AssetRipper.Core.Parser.Files.SerializedFiles
 				}
 				else
 				{
-					replaceWithUnreadableObject = true;
-					Logger.Error($"Read {read} but expected {size} for asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}");
+					if (assetInfo.ClassID != ClassIDType.ParticleSystem && assetInfo.ClassID != ClassIDType.ParticleSystemRenderer)
+					{
+						replaceWithUnreadableObject = true;
+						Logger.Error($"Read {read} but expected {size} for asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}");
+					}
 				}
 			}
 

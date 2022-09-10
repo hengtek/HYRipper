@@ -87,13 +87,13 @@ namespace AssetRipper.Core.Parser.Files.BundleFile.IO
 							case CompressionType.Lz4:
 							case CompressionType.Lz4HC:
 							case CompressionType.Lz4WithDecryption:
-								uint compressedSize = block.CompressedSize;
+								int compressedSize = (int)block.CompressedSize;
 								uint uncompressedSize = block.UncompressedSize;
 								byte[] uncompressedBytes = new byte[uncompressedSize];
 								byte[] compressedBytes = new BinaryReader(m_stream).ReadBytes((int)block.CompressedSize);
 								if (compressType == CompressionType.Lz4WithDecryption && compressedSize > 0x2000)
 								{
-									DecryptBufferUtils.MhySecurityDecryptBuffer(ref compressedBytes, ref compressedSize);
+									Mr0k.Decrypt(ref compressedBytes, ref compressedSize);
 								}
 								int bytesWritten = LZ4Codec.Decode(compressedBytes, uncompressedBytes);
 								if (bytesWritten != uncompressedSize)

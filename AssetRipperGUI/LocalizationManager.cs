@@ -36,15 +36,15 @@ namespace AssetRipper.GUI
 			string choice = Console.ReadLine();
 			if (choice == "ZZZ" || choice == "zzz")
 			{
-				GameChoice.SetGame(1);
+				GameChoice.SetGame(0);
 			}
 			else if (choice == "SR" || choice == "sr")
 			{
-				GameChoice.SetGame(2);
+				GameChoice.SetGame(1);
 			}
 			else
 			{
-				GameChoice.SetGame(1);
+				GameChoice.SetGame(0);
 			}
 			FallbackLocale = CurrentLocale;
 
