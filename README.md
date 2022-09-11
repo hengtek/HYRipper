@@ -13,6 +13,8 @@ HoYoRipper that should work on:
 - Zenless Zone Zero.
 ```
 
+Some of the source codes comes from ShiyumeMeguri.
+
 # Legal Disclaimers
 
 HoYoRipper is licensed under the [GNU General Public License v3.0](License.md).
