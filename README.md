@@ -4,6 +4,15 @@ HoYoRipper is a tool for extracting assets from miHoYo's customize serialized fi
 
 > Important note: This project is currently in an experimental state. Expect bugs and many changes.
 
+_____________________________________________________________________________________________________________________________
+
+HoYoRipper that should work on:
+```
+- Honkai Impact 3rd. (TODO)
+- Honkai: Star Rail.
+- Zenless Zone Zero. (TODO)
+```
+
 # Legal Disclaimers
 
 HoYoRipper is licensed under the [GNU General Public License v3.0](License.md).
