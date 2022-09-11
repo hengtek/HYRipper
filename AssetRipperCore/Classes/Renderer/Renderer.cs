@@ -6,6 +6,7 @@ using AssetRipper.Core.Math.Vectors;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System.Collections.Generic;
 
@@ -314,6 +315,12 @@ namespace AssetRipper.Core.Classes.Renderer
 			{
 				DynamicOccludee = reader.ReadByte();
 			}
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				AllowHalfResolution = reader.ReadByte();
+			}
+
 			if (HasStaticShadowCaster(reader.Version))
 			{
 				StaticShadowCaster = reader.ReadByte();
@@ -452,6 +459,12 @@ namespace AssetRipper.Core.Classes.Renderer
 			}
 			if (IsAlign4(reader.Version))
 			{
+				reader.AlignStream();
+			}
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				UseHighestMip = reader.ReadBoolean();
 				reader.AlignStream();
 			}
 		}
@@ -621,6 +634,7 @@ namespace AssetRipper.Core.Classes.Renderer
 		public ShadowCastingMode CastShadows { get; set; }
 		public byte ReceiveShadows { get; set; }
 		public byte DynamicOccludee { get; set; }
+		public byte AllowHalfResolution { get; set; }
 		public byte StaticShadowCaster { get; set; }
 		public MotionVectorGenerationMode MotionVectors { get; set; }
 		public bool UseLightProbes => LightProbeUsage != LightProbeUsage.Off;
@@ -638,6 +652,7 @@ namespace AssetRipper.Core.Classes.Renderer
 		public int SortingLayerID { get; set; }
 		public short SortingLayer { get; set; }
 		public short SortingOrder { get; set; }
+		public bool UseHighestMip { get; set; }
 
 		public const string EnabledName = "m_Enabled";
 		public const string CastShadowsName = "m_CastShadows";

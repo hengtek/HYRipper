@@ -6,6 +6,7 @@ using AssetRipper.Core.IO.Extensions;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System;
 using System.Collections.Generic;
@@ -82,8 +83,11 @@ namespace AssetRipper.Core.Classes.AssetBundle
 			}
 
 			Container = reader.ReadKVPStringTArray<AssetInfo>();
-			MainAsset.Read(reader);
-
+			if (GameChoice.GetGame() != GameFlags.BH3)
+			{
+				MainAsset.Read(reader);
+			}
+			
 			if (HasScriptCampatibility(reader.Version))
 			{
 				ScriptCompatibility = reader.ReadAssetArray<AssetBundleScriptInfo>();
@@ -99,35 +103,46 @@ namespace AssetRipper.Core.Classes.AssetBundle
 				ClassVersionMap.Read(reader);
 			}
 
-			if (HasRuntimeCompatibility(reader.Version))
+			if (GameChoice.GetGame() != GameFlags.BH3)
 			{
-				RuntimeCompatibility = reader.ReadUInt32();
+				if (HasRuntimeCompatibility(reader.Version))
+				{
+					RuntimeCompatibility = reader.ReadUInt32();
+				}
 			}
-
+				
 			if (HasAssetBundleName(reader.Version))
 			{
 				AssetBundleName = reader.ReadString();
 				Dependencies = reader.ReadStringArray();
 			}
-			if (HasIsStreamedSceneAssetBundle(reader.Version))
-			{
-				IsStreamedSceneAssetBundle = reader.ReadBoolean();
-				reader.AlignStream();
+
+			if (GameChoice.GetGame() != GameFlags.BH3)
+            {
+                if (HasIsStreamedSceneAssetBundle(reader.Version))
+                {
+                    IsStreamedSceneAssetBundle = reader.ReadBoolean();
+                    reader.AlignStream();
+                }
+				if (HasExplicitDataLayout(reader.Version))
+				{
+					ExplicitDataLayout = reader.ReadInt32();
+				}
 			}
-			if (HasExplicitDataLayout(reader.Version))
-			{
-				ExplicitDataLayout = reader.ReadInt32();
-			}
+			
 			if (HasPathFlags(reader.Version))
 			{
 				PathFlags = reader.ReadInt32();
 			}
 
-			if (HasSceneHashes(reader.Version))
-			{
-				SceneHashes = new Dictionary<string, string>();
-				SceneHashes.Read(reader);
-			}
+			if (GameChoice.GetGame() != GameFlags.BH3)
+            {
+                if (HasSceneHashes(reader.Version))
+                {
+                    SceneHashes = new Dictionary<string, string>();
+                    SceneHashes.Read(reader);
+                }
+            }
 		}
 
 		public override IEnumerable<PPtr<IUnityObjectBase>> FetchDependencies(DependencyContext context)

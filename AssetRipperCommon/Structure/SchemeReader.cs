@@ -6,17 +6,32 @@ using AssetRipper.Core.Parser.Files.ResourceFiles;
 using AssetRipper.Core.Parser.Files.Schemes;
 using AssetRipper.Core.Parser.Files.SerializedFiles;
 using AssetRipper.Core.Parser.Files.WebFiles;
+using System;
 using System.IO;
 
 namespace AssetRipper.Core.Structure
 {
 	public static class SchemeReader
 	{
+		private static FileScheme[] list = new FileScheme[1000];
 		/// <summary>Returns some information about the file including its type</summary>
 		public static FileScheme LoadScheme(string filePath, string fileName)
 		{
 			using SmartStream stream = SmartStream.OpenRead(filePath);
 			return ReadScheme(stream, filePath, fileName);
+		}
+
+		public static FileScheme[] LoadScheme_BH3(string filePath, string fileName)
+		{
+			Array.Clear(list, 0, list.Length);
+			using SmartStream stream = SmartStream.OpenRead(filePath);
+			int v1 = 0;
+			while (stream.Position != stream.Length)
+			{
+				list[v1] = ReadScheme(stream, filePath, fileName);
+				v1++;
+			}
+			return list;
 		}
 
 		public static FileScheme ReadScheme(byte[] buffer, string filePath, string fileName)

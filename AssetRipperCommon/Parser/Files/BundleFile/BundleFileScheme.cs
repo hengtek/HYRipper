@@ -1,4 +1,5 @@
 using AssetRipper.Core.Extensions;
+using AssetRipper.Core.HoYo;
 using AssetRipper.Core.IO.Endian;
 using AssetRipper.Core.IO.Extensions;
 using AssetRipper.Core.IO.Smart;
@@ -54,7 +55,6 @@ namespace AssetRipper.Core.Parser.Files.BundleFile
 					ReadRawWebMetadata(stream, out Stream dataStream, out long metadataOffset);//ReadBlocksAndDirectory
 					ReadRawWebData(dataStream, metadataOffset);//also ReadBlocksAndDirectory
 					break;
-
 				case BundleType.ENCR:
 					long mihoyoHeaderSize = stream.Position - basePosition;
 					ReadFileStreamMetadata(stream, basePosition);//ReadBlocksInfoAndDirectory
@@ -155,6 +155,25 @@ namespace AssetRipper.Core.Parser.Files.BundleFile
 						int uncompressedSize = header.UncompressedBlocksInfoSize;
 						byte[] uncompressedBytes = new byte[uncompressedSize];
 						byte[] compressedBytes = new BinaryReader(stream).ReadBytes(header.CompressedBlocksInfoSize);
+						int bytesWritten = LZ4Codec.Decode(compressedBytes, uncompressedBytes);
+						if (bytesWritten != uncompressedSize)
+						{
+							throw new System.Exception($"Incorrect number of bytes written. {bytesWritten} instead of {uncompressedSize} for {compressedBytes.Length} compressed bytes");
+						}
+						ReadMetadata(new MemoryStream(uncompressedBytes), uncompressedSize);
+					}
+					break;
+
+				case CompressionType.Lz4WithDecryption:
+					{
+						int uncompressedSize = header.UncompressedBlocksInfoSize;
+						int compressedSize = header.CompressedBlocksInfoSize;
+						byte[] uncompressedBytes = new byte[uncompressedSize];
+						byte[] compressedBytes = new BinaryReader(stream).ReadBytes(header.CompressedBlocksInfoSize);
+						if (Mr0k.IsMr0k(compressedBytes))
+						{
+							Mr0k.Decrypt(ref compressedBytes, ref compressedSize);
+						}
 						int bytesWritten = LZ4Codec.Decode(compressedBytes, uncompressedBytes);
 						if (bytesWritten != uncompressedSize)
 						{

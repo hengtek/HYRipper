@@ -11,7 +11,7 @@ namespace AssetRipper.GUI
 		{
 			Logger.Add(new FileLogger());
 			Logger.Add(new ConsoleLogger());
-			Logger.LogSystemInformation("AssetRipper GUI Version");
+			Logger.LogSystemInformation("HoYoRipper GUI Version");
 
 			// Initialization code. Don't use any Avalonia, third-party APIs or any
 			// SynchronizationContext-reliant code before AppMain is called: things aren't initialized

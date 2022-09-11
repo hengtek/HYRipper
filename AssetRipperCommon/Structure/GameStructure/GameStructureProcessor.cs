@@ -9,6 +9,7 @@ using AssetRipper.Core.Parser.Files.Schemes;
 using AssetRipper.Core.Parser.Files.SerializedFiles;
 using AssetRipper.Core.Parser.Files.SerializedFiles.Parser;
 using AssetRipper.Core.Structure.GameStructure.Platforms;
+using AssetRipper.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,28 @@ namespace AssetRipper.Core.Structure.GameStructure
 		/// <summary>Adds a file and its type to the list of files</summary>
 		public void AddScheme(string filePath, string fileName)
 		{
-			FileScheme scheme = SchemeReader.LoadScheme(filePath, fileName);
-			OnSchemeLoaded(scheme);
-			m_schemes.Add(scheme);
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				FileScheme[] scheme_list = SchemeReader.LoadScheme_BH3(filePath, fileName);
+				for (int i = 0; i < scheme_list.Length; i++)
+				{
+					if (scheme_list[i] != null)
+					{
+						OnSchemeLoaded(scheme_list[i]);
+						m_schemes.Add(scheme_list[i]);
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+			else
+			{
+				FileScheme scheme = SchemeReader.LoadScheme(filePath, fileName);
+				OnSchemeLoaded(scheme);
+				m_schemes.Add(scheme);
+			}
 		}
 
 		/// <summary>Recursively adds Serialized files to the m_knownFiles hashset</summary>

@@ -10,6 +10,7 @@ using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Parser.Files.SerializedFiles;
 using AssetRipper.Core.Project;
 using AssetRipper.Core.Project.Exporters.Engine;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System;
 using System.Collections.Generic;
@@ -282,6 +283,11 @@ namespace AssetRipper.Core.Classes.GraphicsSettings
 				MotionVectors.Read(reader);
 				LightHalo.Read(reader);
 				LensFlare.Read(reader);
+			}
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				DepthDownSample.Read(reader);
 			}
 
 			if (HasVideoShadersIncludeMode(reader.Version))
@@ -648,6 +654,7 @@ namespace AssetRipper.Core.Classes.GraphicsSettings
 		public BuiltinShaderSettings MotionVectors = new();
 		public BuiltinShaderSettings LightHalo = new();
 		public BuiltinShaderSettings LensFlare = new();
+		public BuiltinShaderSettings DepthDownSample = new();
 		public PPtr<Material.Material> SpritesDefaultMaterial = new();
 		public PPtr<MonoBehaviour> CustomRenderPipeline = new();
 		public Vector3f TransparencySortAxis = new();

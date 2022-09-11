@@ -13,6 +13,7 @@ using AssetRipper.Core.Math.Vectors;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using AssetRipper.Core.YAML.Extensions;
 using System;
@@ -133,6 +134,9 @@ namespace AssetRipper.Core.Classes.Mesh
 		public bool IsReadable { get; set; }
 		public bool KeepVertices { get; set; }
 		public bool KeepIndices { get; set; }
+		public bool IsHighPrecisionPosition { get; set; }
+		public bool IsHighPrecisionTangent { get; set; }
+		public bool IsHighPrecisionUv { get; set; }
 		public IndexFormat IndexFormat { get; set; }
 		public Vector3f[] Vertices { get; set; }
 		public int VertexCount { get; private set; }
@@ -153,6 +157,7 @@ namespace AssetRipper.Core.Classes.Mesh
 		public int MeshUsageFlags { get; set; }
 		public float[] MeshMetrics { get; set; }
 		public List<uint> Indices { get; set; } = new List<uint>();
+		public bool MetricsDirty { get; set; }
 		public List<List<uint>> Triangles { get; set; } = new List<List<uint>>();
 
 		public Mesh(AssetInfo assetInfo) : base(assetInfo) { }
@@ -291,9 +296,9 @@ namespace AssetRipper.Core.Classes.Mesh
 		/// </summary>
 		public static bool HasCollision(UnityVersion version) => version.IsGreaterEqual(5);
 		/// <summary>
-		/// 2018.2 and greater
+		/// 2017.3 and greater
 		/// </summary>
-		public static bool HasMeshMetrics(UnityVersion version) => version.IsGreaterEqual(2018, 2);
+		public static bool HasMeshMetrics(UnityVersion version) => version.IsGreaterEqual(2017, 3);
 		/// <summary>
 		/// 3.5.0 and greater and Not Release
 		/// </summary>
@@ -430,6 +435,12 @@ namespace AssetRipper.Core.Classes.Mesh
 			if (HasIsReadable(reader.Version))
 			{
 				IsReadable = reader.ReadBoolean();
+				if (GameChoice.GetGame() == GameFlags.BH3)
+				{
+					IsHighPrecisionPosition = reader.ReadBoolean();
+					IsHighPrecisionTangent = reader.ReadBoolean();
+					IsHighPrecisionUv = reader.ReadBoolean();
+				}
 				KeepVertices = reader.ReadBoolean();
 				KeepIndices = reader.ReadBoolean();
 			}
@@ -535,6 +546,13 @@ namespace AssetRipper.Core.Classes.Mesh
 				MeshMetrics[0] = reader.ReadSingle();
 				MeshMetrics[1] = reader.ReadSingle();
 			}
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				MetricsDirty = reader.ReadBoolean();
+				reader.AlignStream();
+			}
+
 			if (HasStreamData(reader.Version))
 			{
 				reader.AlignStream();

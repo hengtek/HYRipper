@@ -8,6 +8,7 @@ using AssetRipper.Core.Math.Vectors;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System.Collections.Generic;
 
@@ -190,6 +191,17 @@ namespace AssetRipper.Core.Classes.Camera
 				StereoConvergence = reader.ReadSingle();
 				StereoSeparation = reader.ReadSingle();
 			}
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				HalfResolutionParticleEnable = reader.ReadBoolean();
+				OutputHalfResolutionDepth = reader.ReadBoolean();
+				ForceLoadDepthInMotionVector = reader.ReadBoolean();
+				MRTOutputDepthNormal = reader.ReadBoolean();
+				UseDepthNormalFromUser = reader.ReadBoolean();
+				UsedForTextureStreaming = reader.ReadBoolean();
+			}
+
 			if (HasStereoMirrorMode(reader.Version))
 			{
 				StereoMirrorMode = reader.ReadBoolean();
@@ -281,6 +293,12 @@ namespace AssetRipper.Core.Classes.Camera
 		public float StereoConvergence { get; set; }
 		public float StereoSeparation { get; set; }
 		public bool StereoMirrorMode { get; set; }
+		public bool HalfResolutionParticleEnable { get; set; }
+		public bool OutputHalfResolutionDepth { get; set; }
+		public bool ForceLoadDepthInMotionVector { get; set; }
+		public bool MRTOutputDepthNormal { get; set; }
+		public bool UseDepthNormalFromUser { get; set; }
+		public bool UsedForTextureStreaming { get; set; }
 
 		public const string ClearFlagsName = "m_ClearFlags";
 		public const string BackGroundColorName = "m_BackGroundColor";
