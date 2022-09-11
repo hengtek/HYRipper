@@ -1,4 +1,5 @@
-﻿using AssetRipper.Core.Logging;
+﻿using AssetRipper.Core.HoYo;
+using AssetRipper.Core.Logging;
 using AssetRipper.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace AssetRipper.GUI
 		public void Init()
 		{
 			LoadLanguage("en_US");
-			Console.Write("请输入所需要解包的游戏 不输入默认为ZZZ <ZZZ|SR> :");
+			Console.Write("请输入所需要解包的游戏 不输入默认为ZZZ <ZZZ|SR>: ");
 			string choice = Console.ReadLine();
 			if (choice == "ZZZ" || choice == "zzz")
 			{
@@ -41,6 +42,11 @@ namespace AssetRipper.GUI
 			else if (choice == "SR" || choice == "sr")
 			{
 				GameChoice.SetGame(1);
+				Mr0k.ExpansionKey = Crypto.ExpansionKey;
+				Mr0k.Key = Crypto.Key;
+				Mr0k.ConstKey = Crypto.ConstKey;
+				Mr0k.SBox = null;
+				Mr0k.BlockKey = null;
 			}
 			else
 			{

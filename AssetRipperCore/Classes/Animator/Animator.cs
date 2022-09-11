@@ -6,6 +6,7 @@ using AssetRipper.Core.IO.Extensions;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System.Collections.Generic;
 
@@ -83,7 +84,11 @@ namespace AssetRipper.Core.Classes.Animator
 				UpdateMode = (AnimatorUpdateMode)reader.ReadInt32();
 			}
 
-			MotionSkeletonMode = reader.ReadInt32();
+			if (GameChoice.GetGame() == GameFlags.SR)
+			{
+				MotionSkeletonMode = reader.ReadInt32();
+			}
+
 			ApplyRootMotion = reader.ReadBoolean();
 
 			if (HasAnimatePhisics(reader.Version))

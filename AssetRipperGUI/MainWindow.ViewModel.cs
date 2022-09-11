@@ -399,54 +399,5 @@ namespace AssetRipper.GUI
 			SelectedAsset?.Dispose();
 			SelectedAsset = new(selectedAsset, _assetContainer);
 		}
-
-		// Called from UI
-		private void CheckForUpdatesUI() => CheckForUpdates(true);
-
-		/// <summary>
-		/// Checks Github for a more recent release
-		/// </summary>
-		/// <param name="showUpToDateMessage">Should this show a message notifying the user in the event their software doesn't need updated.</param>
-		internal void CheckForUpdates(bool showUpToDateMessage)
-		{
-			if (!UpdateManager.CheckForUpdates(out Version current, out Version release))
-				return;
-
-			if (release > current)
-			{
-				MessageBox.Popup(
-					MainWindow.Instance.LocalizationManager["menu_about_check_for_update_available_title"],
-					string.Format(MainWindow.Instance.LocalizationManager["menu_about_check_for_update_available"], release),
-					MessageBoxViewModel.Buttons.YesNo,
-					UpdatePopupClosed);
-			}
-			else if (showUpToDateMessage)
-			{
-				MessageBox.Popup(
-					MainWindow.Instance.LocalizationManager["menu_about_check_for_update_up_to_date_title"],
-					string.Format(MainWindow.Instance.LocalizationManager["menu_about_check_for_update_up_to_date"], current)
-				);
-			}
-		}
-
-		private void UpdatePopupClosed(MessageBoxViewModel.Result result)
-		{
-			if (result == MessageBoxViewModel.Result.Yes)
-			{
-				OpenUrl(BuildInfo.ReleasesURL);
-			}
-		}
-
-		// Called from UI
-		private void GithubClicked() => OpenUrl(BuildInfo.RepositoryURL);
-
-		//Called from UI
-		private void TranslateClicked() => OpenUrl(BuildInfo.TranslationURL);
-
-		// Called from UI
-		private void WebsiteClicked() => OpenUrl(BuildInfo.WebsiteURL);
-
-		private static void OpenUrl(string url) =>
-			Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
 	}
 }

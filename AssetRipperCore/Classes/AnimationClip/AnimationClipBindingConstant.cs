@@ -5,6 +5,7 @@ using AssetRipper.Core.IO.Asset;
 using AssetRipper.Core.IO.Extensions;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,10 @@ namespace AssetRipper.Core.Classes.AnimationClip
 		public AnimationClipBindingConstant() { }
 		public AnimationClipBindingConstant(bool _)
 		{
-			AclBindings = Array.Empty<GenericBinding.GenericBinding>();
+			if (GameChoice.GetGame() == GameFlags.SR)
+			{
+				AclBindings = Array.Empty<GenericBinding.GenericBinding>();
+			}
 			GenericBindings = Array.Empty<GenericBinding.GenericBinding>();
 			PPtrCurveMapping = Array.Empty<PPtr<Object.Object>>();
 		}
@@ -52,15 +56,18 @@ namespace AssetRipper.Core.Classes.AnimationClip
 
 		public void Read(AssetReader reader)
 		{
-			AclBindings = reader.ReadAssetArray<GenericBinding.GenericBinding>();
-			if (IsAlign(reader.Version))
+			if (GameChoice.GetGame() == GameFlags.SR)
 			{
-				reader.AlignStream();
-			}
+				AclBindings = reader.ReadAssetArray<GenericBinding.GenericBinding>();
+				if (IsAlign(reader.Version))
+				{
+					reader.AlignStream();
+				}
 
-			float key = reader.ReadSingle();
-			float value = reader.ReadSingle();
-			AclRange = new KeyValuePair<float, float>(key, value);
+				float key = reader.ReadSingle();
+				float value = reader.ReadSingle();
+				AclRange = new KeyValuePair<float, float>(key, value);
+			}
 
 			GenericBindings = reader.ReadAssetArray<GenericBinding.GenericBinding>();
 			if (IsAlign(reader.Version))

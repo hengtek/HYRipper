@@ -1,6 +1,7 @@
 using AssetRipper.Core.Classes.AnimatorController.Constants;
 using AssetRipper.Core.IO.Asset;
 using AssetRipper.Core.Parser.Files;
+using AssetRipper.Core.Utils;
 using System.Collections.Generic;
 
 namespace AssetRipper.Core.Classes.AnimationClip.Clip
@@ -20,10 +21,17 @@ namespace AssetRipper.Core.Classes.AnimationClip.Clip
 		{
 			StreamedClip.Read(reader);
 			DenseClip.Read(reader);
-			AclClip.Read(reader);
+			if (GameChoice.GetGame() == GameFlags.SR)
+			{
+				AclClip.Read(reader);
+			}
 			if (HasConstantClip(reader.Version))
 			{
 				ConstantClip.Read(reader);
+			}
+			if (GameChoice.GetGame() != GameFlags.SR)
+			{
+				AclClip.Read(reader);
 			}
 			if (HasBinding(reader.Version))
 			{

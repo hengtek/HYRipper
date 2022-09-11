@@ -7,6 +7,7 @@ using AssetRipper.Core.Math;
 using AssetRipper.Core.Parser.Asset;
 using AssetRipper.Core.Parser.Files;
 using AssetRipper.Core.Project;
+using AssetRipper.Core.Utils;
 using AssetRipper.Core.YAML;
 using AssetRipper.Core.YAML.Extensions;
 using System.Collections.Generic;
@@ -183,10 +184,13 @@ namespace AssetRipper.Core.Classes
 				{
 					reader.AlignStream();
 				}
-				EnableSkinning = reader.ReadBoolean();
-				if (IsAlignDirty(reader.Version))
+				if (GameChoice.GetGame() == GameFlags.SR)
 				{
-					reader.AlignStream();
+					EnableSkinning = reader.ReadBoolean();
+					if (IsAlignDirty(reader.Version))
+					{
+						reader.AlignStream();
+					}
 				}
 			}
 		}

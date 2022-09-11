@@ -362,6 +362,10 @@ namespace AssetRipper.Core.Parser.Files.SerializedFiles
 					replaceWithUnreadableObject = true;
 					Logger.Error($"Error during reading of asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}", ex);
 				}
+				else
+				{
+					replaceWithUnreadableObject = true;
+				}
 			}
 			long read = reader.BaseStream.Position - offset;
 			if (!replaceWithUnreadableObject && read != size)
@@ -376,6 +380,10 @@ namespace AssetRipper.Core.Parser.Files.SerializedFiles
 					{
 						replaceWithUnreadableObject = true;
 						Logger.Error($"Read {read} but expected {size} for asset type {assetInfo.ClassID}. V: {Version} P: {Platform} N: {Name} Path: {FilePath}");
+					}
+					else
+					{
+						replaceWithUnreadableObject = true;
 					}
 				}
 			}
