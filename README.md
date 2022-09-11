@@ -10,7 +10,7 @@ HoYoRipper that should work on:
 ```
 - Honkai Impact 3rd. (TODO)
 - Honkai: Star Rail.
-- Zenless Zone Zero. (TODO)
+- Zenless Zone Zero.
 ```
 
 # Legal Disclaimers
