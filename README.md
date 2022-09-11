@@ -1,6 +1,6 @@
 # HoYoRipper
 
-HoYoRipper is a tool for extracting assets from miHoYo's customize serialized files (*CAB-*\*, *\*.assets*, *\*.sharedAssets*, etc.) and assets bundles (*\*.unity3d*, *\*.bundle*, etc.) and converting them into the native Unity engine format.
+HoYoRipper is a tool for extracting assets from miHoYo's customize serialized files (*CAB-*\*, *\*.assets*, *\*.sharedAssets*, etc.) and customize assets bundles (*\*.unity3d*, *\*.bundle*, etc.) and converting them into the native Unity engine format.
 
 > Important note: This project is currently in an experimental state. Expect bugs and many changes.
 
