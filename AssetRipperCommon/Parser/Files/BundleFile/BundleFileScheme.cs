@@ -9,6 +9,7 @@ using AssetRipper.Core.Parser.Files.Entries;
 using AssetRipper.Core.Parser.Files.Schemes;
 using AssetRipper.Core.Structure;
 using AssetRipper.Core.Structure.GameStructure;
+using AssetRipper.Core.Utils;
 using K4os.Compression.LZ4;
 using System;
 using System.IO;
@@ -120,10 +121,10 @@ namespace AssetRipper.Core.Parser.Files.BundleFile
 		private void ReadFileStreamMetadata(Stream stream, long basePosition)
 		{
 			BundleFileStreamHeader header = Header.FileStream;
-			//if (Header.Version >= BundleVersion.BF_Addressables)
-			//{
-			//	stream.Align(16);
-			//}
+			if (Header.Version >= BundleVersion.BF_Addressables && GameChoice.GetGame() != GameFlags.SR)
+			{
+				stream.Align(16);
+			}
 			if (header.Flags.IsBlocksInfoAtTheEnd())
 			{
 				stream.Position = basePosition + (header.Size - header.CompressedBlocksInfoSize);

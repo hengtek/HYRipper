@@ -38,6 +38,11 @@ namespace AssetRipper.GUI
 			if (choice == "ZZZ" || choice == "zzz")
 			{
 				GameChoice.SetGame(0);
+				Mr0k.ExpansionKey = Crypto.ExpansionKey;
+				Mr0k.Key = Crypto.Key;
+				Mr0k.ConstKey = Crypto.ConstKey;
+				Mr0k.SBox = null;
+				Mr0k.BlockKey = null;
 			}
 			else if (choice == "SR" || choice == "sr")
 			{
@@ -51,6 +56,11 @@ namespace AssetRipper.GUI
 			else
 			{
 				GameChoice.SetGame(0);
+				Mr0k.ExpansionKey = Crypto.ExpansionKey;
+				Mr0k.Key = Crypto.Key;
+				Mr0k.ConstKey = Crypto.ConstKey;
+				Mr0k.SBox = null;
+				Mr0k.BlockKey = null;
 			}
 			FallbackLocale = CurrentLocale;
 
