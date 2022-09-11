@@ -95,7 +95,7 @@ namespace AssetRipper.Console
 			Logger.AllowVerbose = options.verbose;
 			Logger.Add(new ConsoleLogger(false));
 			Logger.Add(new FileLogger(options.LogFile.FullName));
-			Logger.LogSystemInformation("AssetRipper Console Version");
+			Logger.LogSystemInformation("HoYoRipper Console Version");
 			Core.Updating.UpdateManager.LogUpdateCheck();
 
 			try

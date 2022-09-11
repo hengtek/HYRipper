@@ -8,7 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AssetRipper.GUI.MainWindow"
         Icon="/Resources/GUI_Icon.ico"
-        Title="Asset Ripper GUI">
+        Title="HoYo Ripper GUI">
     <DragDrop.AllowDrop>
         <MultiBinding Converter="{x:Static BoolConverters.And}">
             <Binding Path="!IsExporting" />

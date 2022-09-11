@@ -75,9 +75,9 @@ namespace AssetRipper.Core.Logging
 		private static void LogReleaseInformation()
 		{
 #if DEBUG
-			Log(LogType.Info, LogCategory.System, $"AssetRipper Build Type: Debug {GetBuildArchitecture()} {GetBuildType()}");
+			Log(LogType.Info, LogCategory.System, $"HoYoRipper Build Type: Debug {GetBuildArchitecture()} {GetBuildType()}");
 #else
-			Log(LogType.Info, LogCategory.System, $"AssetRipper Build Type: Release {GetBuildArchitecture()} {GetBuildType()}");
+			Log(LogType.Info, LogCategory.System, $"HoYoRipper Build Type: Release {GetBuildArchitecture()} {GetBuildType()}");
 #endif
 		}
 
@@ -102,7 +102,7 @@ namespace AssetRipper.Core.Logging
 		{
 			Log(LogType.Info, LogCategory.System, programName);
 			LogOperatingSystemInformation();
-			Log(LogType.Info, LogCategory.System, $"AssetRipper Version: {BuildInfo.Version}");
+			Log(LogType.Info, LogCategory.System, $"HoYoRipper Version: {BuildInfo.Version}");
 			LogReleaseInformation();
 			Log(LogType.Info, LogCategory.System, $"UTC Current Time: {System.DateTime.UtcNow.ToString()}");
 			Log(LogType.Info, LogCategory.System, $"UTC Compile Time: {GetCompileTime()}");

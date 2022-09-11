@@ -9,8 +9,8 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<AssemblyName>AssetRipperCommon</AssemblyName>
 		<RootNamespace>AssetRipper.Core</RootNamespace>
-		<Copyright>Copyright ©  2021</Copyright>
-		<Authors>ds5678</Authors>
+		<Copyright>Copyright ©  2022</Copyright>
+		<Authors>DNLINYJ</Authors>
 		<Configurations>Debug;Release</Configurations>
 		<DebugType>embedded</DebugType>
 		<DebugSymbols>true</DebugSymbols>

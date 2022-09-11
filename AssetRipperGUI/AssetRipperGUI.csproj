@@ -12,8 +12,8 @@
 		<AssemblyName>AssetRipper</AssemblyName>
 		<RootNamespace>AssetRipper.GUI</RootNamespace>
 		<DefineConstants>TRACE;NET_CORE</DefineConstants>
-		<Copyright>Copyright © 2021</Copyright>
-		<Authors>ds5678</Authors>
+		<Copyright>Copyright © 2022</Copyright>
+		<Authors>DNLINYJ</Authors>
 		<Platforms>x64</Platforms>
 		<DebugType>embedded</DebugType>
 		<DebugSymbols>true</DebugSymbols>
