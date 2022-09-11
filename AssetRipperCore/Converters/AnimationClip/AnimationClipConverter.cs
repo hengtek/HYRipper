@@ -50,7 +50,8 @@ namespace AssetRipper.Core.Converters.AnimationClip
 			AclClip m_ACLClip = clip.AclClip;
 			if (m_ACLClip.IsSet)
 			{
-				lastFrame = System.Math.Max(lastFrame, ProcessAclClip(clip, bindings, tos));
+				var lastACLFrame = ProcessAclClip(clip, bindings, tos);
+				lastFrame = System.Math.Max(lastFrame, lastACLFrame);
 				ProcessStreams(streamedFrames, bindings, tos, clip.DenseClip.SampleRate, (int)m_ACLClip.m_CurveCount);
 				ProcessDenses(clip, bindings, tos, (int)m_ACLClip.m_CurveCount);
 				if (Clip.HasConstantClip(Layout.Version))
@@ -179,7 +180,7 @@ namespace AssetRipper.Core.Converters.AnimationClip
 				for (int curveIndex = 0; curveIndex < constant.Constants.Length;)
 				{
 					int index = aclCurveCount + streamCount + denseCount + curveIndex;
-					GenericBinding binding = bindings.FindBinding((int)(index + clip.AclClip.m_CurveCount));
+					GenericBinding binding = bindings.FindBinding(index);
 					string path = GetCurvePath(tos, binding.Path);
 					if (binding.IsTransform)
 					{
