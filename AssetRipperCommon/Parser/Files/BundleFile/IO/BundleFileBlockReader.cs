@@ -1,7 +1,6 @@
 ﻿using AssetRipper.Core.Extensions;
 using AssetRipper.Core.IO.Smart;
 using AssetRipper.Core.Parser.Files.BundleFile.Parser;
-using AssetRipper.Core.Utils;
 using AssetRipper.Core.HoYo;
 using K4os.Compression.LZ4;
 using System;
@@ -91,7 +90,7 @@ namespace AssetRipper.Core.Parser.Files.BundleFile.IO
 								uint uncompressedSize = block.UncompressedSize;
 								byte[] uncompressedBytes = new byte[uncompressedSize];
 								byte[] compressedBytes = new BinaryReader(m_stream).ReadBytes((int)block.CompressedSize);
-								if (compressType == CompressionType.Lz4WithDecryption && compressedSize > 0x2000)
+								if (compressType == CompressionType.Lz4WithDecryption && Mr0k.IsMr0k(compressedBytes))
 								{
 									Mr0k.Decrypt(ref compressedBytes, ref compressedSize);
 								}

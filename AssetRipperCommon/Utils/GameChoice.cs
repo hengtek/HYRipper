@@ -18,7 +18,7 @@ namespace AssetRipper.Core.Utils
 			game1 = (GameFlags)game;
 			if (game1 == GameFlags.SR)
 			{
-				Logger.Info(LogCategory.System, $"已选择游戏 Honkai Impact: Star Rail | 崩坏:星穹铁道");
+				Logger.Info(LogCategory.System, $"已选择游戏 Honkai : Star Rail | 崩坏:星穹铁道");
 			}
 			else if (game1 == GameFlags.ZZZ)
 			{
@@ -35,6 +35,6 @@ namespace AssetRipper.Core.Utils
 			return game1;
 		}
 
-		public static GameFlags game1;
+		private static GameFlags game1;
 	}
 }

@@ -33,7 +33,7 @@ namespace AssetRipper.GUI
 		public void Init()
 		{
 			LoadLanguage("en_US");
-			Console.Write("请输入所需要解包的游戏 不输入默认为ZZZ <ZZZ|SR>: ");
+			Console.Write("请输入所需要解包的游戏 不输入默认为ZZZ <ZZZ|SR|BH3>: ");
 			string choice = Console.ReadLine();
 			if (choice == "ZZZ" || choice == "zzz")
 			{
@@ -51,6 +51,15 @@ namespace AssetRipper.GUI
 				Mr0k.Key = Crypto.Key;
 				Mr0k.ConstKey = Crypto.ConstKey;
 				Mr0k.SBox = null;
+				Mr0k.BlockKey = null;
+			}
+			else if (choice == "BH3" || choice == "bh3")
+			{
+				GameChoice.SetGame(2);
+				Mr0k.ExpansionKey = Crypto.BH3ExpansionKey;
+				Mr0k.Key = Crypto.BH3Key;
+				Mr0k.ConstKey = Crypto.BH3ConstKey;
+				Mr0k.SBox = Crypto.BH3SBox;
 				Mr0k.BlockKey = null;
 			}
 			else

@@ -1,5 +1,7 @@
 ﻿using AssetRipper.Core.IO.Endian;
+using AssetRipper.Core.IO.Extensions;
 using AssetRipper.Core.Parser.Files.BundleFile.Parser;
+using AssetRipper.Core.Utils;
 using System;
 
 namespace AssetRipper.Core.Parser.Files.BundleFile.Header
@@ -35,7 +37,34 @@ namespace AssetRipper.Core.Parser.Files.BundleFile.Header
 		{
 			string signature = reader.ReadStringZeroTerm();
 			Signature = ParseSignature(signature);
-			if (Signature != BundleType.ENCR)
+
+			if (GameChoice.GetGame() == GameFlags.BH3)
+			{
+				Version = (BundleVersion)6;
+				UnityWebBundleVersion = "5.x.x";
+				string engineVersion = "2017.4.18f1";
+				UnityWebMinimumRevision = UnityVersion.Parse(engineVersion);
+			}
+			else if (GameChoice.GetGame() == GameFlags.SR)
+			{
+				var readHeader = Signature != BundleType.ENCR;
+
+				if (!readHeader)
+				{
+					Version = (BundleVersion)7;
+					UnityWebBundleVersion = "5.x.x";
+					string engineVersion = "2019.4.32f1";
+					UnityWebMinimumRevision = UnityVersion.Parse(engineVersion);
+				}
+				else
+				{
+					Version = (BundleVersion)reader.ReadInt32();
+					UnityWebBundleVersion = reader.ReadStringZeroTerm();
+					string engineVersion = reader.ReadStringZeroTerm();
+					UnityWebMinimumRevision = UnityVersion.Parse(engineVersion);
+				}
+			}
+			else
 			{
 				Version = (BundleVersion)reader.ReadInt32();
 				UnityWebBundleVersion = reader.ReadStringZeroTerm();
